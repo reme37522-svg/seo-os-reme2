@@ -1,0 +1,30 @@
+{
+  // SEO OS dashboard: member template. No resource IDs on purpose: the
+  // Deploy-to-Cloudflare flow auto-provisions a fresh D1 database and KV
+  // namespace per deployment. No R2: it requires a billing-enabled
+  // subscription, which new member accounts don't have, and nothing uses it.
+  // Nico's personal config lives in wrangler.local.jsonc (git-ignored);
+  // he deploys with `npm run deploy:mine`.
+  "name": "seo-os-reme2",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-13",
+  "assets": {
+    "directory": "public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "seo-os-reme2-db","database_id": "db99c6cd-8656-4ab5-9172-927c6607444a"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV","id": "2f84be57fd13471d9becf9ecadaa11bc"
+    }
+  ]
+  // Secrets: COOKIE_SECRET is optional. Without it the Worker generates a
+  // signing secret on first use and stores it in KV ("cookie_secret").
+  // Member deployments need no other secrets: AGENT_TOKEN and similar exist
+  // only in Nico's personal setup (wrangler.local.jsonc), not this template.
+}
